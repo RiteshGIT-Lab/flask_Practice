@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MONGO_URI = "mongodb://localhost:27017/testdb"
+    }
+
     stages {
 
         stage('Build') {
@@ -22,6 +26,8 @@ pipeline {
                 sh '''
                 echo "Test Stage: Running pytest"
                 . venv/bin/activate
+
+                export MONGO_URI=${MONGO_URI}
                 pytest -v
                 '''
             }
