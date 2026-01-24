@@ -32,11 +32,19 @@ jobs:
       - name: Start MongoDB (Docker)
         run: |
           docker run -d --name mongo -p 27017:27017 mongo:latest
+                - name: Start MongoDB (Docker)
+        run: |
+          docker run -d --name mongo -p 27017:27017 mongo:latest
+          sleep 5
 
-      - name: Run Tests
+
+            - name: Run Tests
+        env:
+          MONGO_URI: mongodb://localhost:27017/test_student_db
         run: |
           source venv/bin/activate
           pytest -v
+
 
       - name: Build Step
         run: echo "Build completed successfully ✅"
